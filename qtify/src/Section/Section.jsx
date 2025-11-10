@@ -1,18 +1,29 @@
-// src/components/Section/Section.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import AlbumCard from "../AlbumCard/AlbumCard";
 import { Button, Typography, Box } from "@mui/material";
 
 function Section({ title, apiEndpoint, testIdPrefix }) {
   const [albums, setAlbums] = useState([]);
+  const fetchedRef = useRef(false); 
 
   useEffect(() => {
-    axios
-      .get(apiEndpoint)
-      .then((response) => setAlbums(response.data))
-      .catch((error) => console.error("Error fetching albums:", error));
-  }, [apiEndpoint]);
+    if (fetchedRef.current) return; 
+    fetchedRef.current = true;
+
+    const fetchAlbums = async () => {
+      try {
+        const { data } = await axios.get(apiEndpoint);
+        
+        setAlbums(Array.isArray(data) ? data : []);
+        console.log(`${title}: ${Array.isArray(data) ? data.length : 0}`); 
+      } catch (error) {
+        console.error("Error fetching albums:", error);
+      }
+    };
+
+    fetchAlbums();
+  }, [apiEndpoint, title]);
 
   return (
     <Box sx={{ backgroundColor: "#000", color: "#fff", padding: "40px" }}>
@@ -61,7 +72,7 @@ function Section({ title, apiEndpoint, testIdPrefix }) {
           <AlbumCard
             key={album.id}
             album={album}
-            testId={`${testIdPrefix}-album-card`} 
+            testId={`${testIdPrefix}-album-card`}
           />
         ))}
       </Box>

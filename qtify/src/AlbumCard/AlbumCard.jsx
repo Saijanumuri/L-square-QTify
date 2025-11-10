@@ -1,17 +1,15 @@
-// src/components/AlbumCard/AlbumCard.jsx
 import React from "react";
 import { Card, CardMedia, CardContent, Typography, Chip, Box } from "@mui/material";
-import { maxHeight } from "@mui/system";
 
 function AlbumCard({ album, testId }) {
   return (
     <Card
-      data-testid={testId} 
+      data-testid={testId}
       sx={{
         backgroundColor: "#121212",
         borderRadius: "10px",
         width: 159,
-        height: maxHeight,
+        height: 205,
         boxShadow: "none",
         color: "#fff",
         textAlign: "center",
@@ -19,6 +17,7 @@ function AlbumCard({ album, testId }) {
         paddingBottom: "4px",
       }}
     >
+      
       <CardMedia
         component="img"
         image={album.image}
@@ -32,12 +31,13 @@ function AlbumCard({ album, testId }) {
         }}
       />
 
+      
       <Box sx={{ display: "flex", justifyContent: "center", marginTop: "4px" }}>
         <Chip
           label={`${album.follows} Follows`}
           sx={{
             backgroundColor: "#000",
-            color: "#fff",
+            color: "#FFFFFF",
             borderRadius: "10px",
             fontSize: "12px",
             fontWeight: 500,
@@ -48,6 +48,7 @@ function AlbumCard({ album, testId }) {
         />
       </Box>
 
+      
       <CardContent sx={{ padding: "4px 0 0 0" }}>
         <Typography
           variant="subtitle1"
