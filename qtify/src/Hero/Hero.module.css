@@ -1,9 +1,21 @@
 .hero {
-  background-color:#121212;
-  height: 270px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
-  gap: 30px;
+  background-color: #121212; 
+  color: white;
+  padding: 40px 80px;
+  height: 300px;
+}
+
+.textContainer h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.imageContainer img {
+  width: 212px;
+  height: auto;
 }
