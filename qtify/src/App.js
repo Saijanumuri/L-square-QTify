@@ -5,7 +5,7 @@ import Hero from "./Hero/Hero";
 import Section from "./Section/Section";
 import "swiper/css";
 import "swiper/css/navigation";
-
+import SongsSection from "./SongsSection/SongsSection";
 function App() {
   return (
     <>
@@ -23,6 +23,7 @@ function App() {
         apiEndpoint="https://qtify-backend.labs.crio.do/albums/new"
         testIdPrefix="new"
       />
+      <SongsSection />
     </>
   );
 }
