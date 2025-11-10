@@ -3,9 +3,10 @@ import React from "react";
 import { Card, CardMedia, CardContent, Typography, Chip, Box } from "@mui/material";
 import { maxHeight } from "@mui/system";
 
-function AlbumCard({ album }) {
+function AlbumCard({ album, testId }) {
   return (
     <Card
+      data-testid={testId} 
       sx={{
         backgroundColor: "#121212",
         borderRadius: "10px",
@@ -51,7 +52,7 @@ function AlbumCard({ album }) {
         <Typography
           variant="subtitle1"
           sx={{
-            color: "#fff",
+            color: "#FFFFFF",
             fontFamily: "Poppins, sans-serif",
             fontWeight: 400,
             fontSize: "14px",

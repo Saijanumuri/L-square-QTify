@@ -1,18 +1,16 @@
-
+// src/components/Section/Section.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AlbumCard from "../AlbumCard/AlbumCard";
 import { Button, Typography, Box } from "@mui/material";
 
-function Section({ title, apiEndpoint }) {
+function Section({ title, apiEndpoint, testIdPrefix }) {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     axios
       .get(apiEndpoint)
-      .then((response) => {
-        setAlbums(response.data); 
-      })
+      .then((response) => setAlbums(response.data))
       .catch((error) => console.error("Error fetching albums:", error));
   }, [apiEndpoint]);
 
@@ -60,7 +58,11 @@ function Section({ title, apiEndpoint }) {
         }}
       >
         {albums.map((album) => (
-          <AlbumCard key={album.id} album={album} />
+          <AlbumCard
+            key={album.id}
+            album={album}
+            testId={`${testIdPrefix}-album-card`} 
+          />
         ))}
       </Box>
     </Box>
