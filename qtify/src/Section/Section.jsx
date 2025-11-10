@@ -6,20 +6,20 @@ import { Button, Typography, Box } from "@mui/material";
 
 function Section({ title, apiEndpoint, testIdPrefix }) {
   const [albums, setAlbums] = useState([]);
-  const [collapsed, setCollapsed] = useState(false);
+  const [expanded, setExpanded] = useState(false); 
 
   useEffect(() => {
     axios
       .get(apiEndpoint)
       .then((res) => setAlbums(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error fetching albums:", err));
   }, [apiEndpoint]);
 
-  const handleToggle = () => setCollapsed((prev) => !prev);
+  const handleToggle = () => setExpanded((prev) => !prev);
 
   return (
     <Box sx={{ backgroundColor: "#000", color: "#fff", padding: "40px" }}>
-    
+      
       <Box
         sx={{
           display: "flex",
@@ -49,13 +49,14 @@ function Section({ title, apiEndpoint, testIdPrefix }) {
             textTransform: "none",
           }}
         >
-          {collapsed ? "Show All" : "Collapse"}
+          
+          {expanded ? "Collapse" : "Show All"}
         </Button>
       </Box>
 
-    
-      {!collapsed ? (
-
+     
+      {expanded ? (
+        
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "24px" }}>
           {albums.map((album) => (
             <AlbumCard
