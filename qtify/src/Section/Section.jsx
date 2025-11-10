@@ -1,31 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AlbumCard from "../AlbumCard/AlbumCard";
+import Carousel from "../Carousel/Carousel";
 import { Button, Typography, Box } from "@mui/material";
 
 function Section({ title, apiEndpoint, testIdPrefix }) {
   const [albums, setAlbums] = useState([]);
-  const fetchedRef = useRef(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
-    if (fetchedRef.current) return;
-    fetchedRef.current = true;
+    axios
+      .get(apiEndpoint)
+      .then((res) => setAlbums(res.data))
+      .catch((err) => console.error(err));
+  }, [apiEndpoint]);
 
-    const fetchAlbums = async () => {
-      try {
-        const { data } = await axios.get(apiEndpoint);
-        setAlbums(Array.isArray(data) ? data : []);
-        console.log(`${title}: ${Array.isArray(data) ? data.length : 0}`);
-      } catch (error) {
-        console.error("Error fetching albums:", error);
-      }
-    };
-
-    fetchAlbums();
-  }, [apiEndpoint, title]);
+  const handleToggle = () => setCollapsed((prev) => !prev);
 
   return (
     <Box sx={{ backgroundColor: "#000", color: "#fff", padding: "40px" }}>
+    
       <Box
         sx={{
           display: "flex",
@@ -46,6 +40,7 @@ function Section({ title, apiEndpoint, testIdPrefix }) {
         </Typography>
 
         <Button
+          onClick={handleToggle}
           variant="text"
           sx={{
             color: "#34C94B",
@@ -54,25 +49,35 @@ function Section({ title, apiEndpoint, testIdPrefix }) {
             textTransform: "none",
           }}
         >
-          Collapse
+          {collapsed ? "Show All" : "Collapse"}
         </Button>
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "24px",
-        }}
-      >
-        {albums.map((album) => (
-          <AlbumCard
-            key={album.id}
-            album={album}
-            testId={`${testIdPrefix}-album-card`}
-          />
-        ))}
-      </Box>
+    
+      {!collapsed ? (
+
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "24px" }}>
+          {albums.map((album) => (
+            <AlbumCard
+              key={album.id}
+              album={album}
+              testId={`${testIdPrefix}-album-card`}
+            />
+          ))}
+        </Box>
+      ) : (
+        
+        <Carousel
+          items={albums}
+          renderItem={(album) => (
+            <AlbumCard
+              key={album.id}
+              album={album}
+              testId={`${testIdPrefix}-album-card`}
+            />
+          )}
+        />
+      )}
     </Box>
   );
 }
