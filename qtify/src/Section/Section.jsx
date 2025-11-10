@@ -10,7 +10,9 @@ function Section({ title, apiEndpoint }) {
   useEffect(() => {
     axios
       .get(apiEndpoint)
-      .then((response) => setAlbums(response.data))
+      .then((response) => {
+        setAlbums(response.data); 
+      })
       .catch((error) => console.error("Error fetching albums:", error));
   }, [apiEndpoint]);
 
@@ -49,6 +51,7 @@ function Section({ title, apiEndpoint }) {
         </Button>
       </Box>
 
+      
       <Box
         sx={{
           display: "flex",
